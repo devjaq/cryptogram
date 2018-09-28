@@ -18,7 +18,7 @@ document.body.appendChild(letterBox);
 let alpha = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 for (let i = 0; i < 26; i++) {
   let letterInput = document.createElement("div");
-  letterInput.innerHTML = `${alpha[i]} -> <input type="text" id="${alpha[i]}" newletter="${alpha[i]}" onblur="letterChange(id, value)">`
+  letterInput.innerHTML = `${alpha[i]} -> <input autocomplete="off" maxlength="1" type="text" id="${alpha[i]}" newletter="${alpha[i]}" onfocus="highlight(id, value)" onblur="letterChange(id, value)">`
   letterBox.appendChild(letterInput);
 
 }
@@ -27,29 +27,31 @@ for (let i = 0; i < 26; i++) {
 let letterChange = (oldLetter, newLetter) => {
   let letter = document.getElementById(oldLetter);
 
-  if (newLetter === "" || newLetter === " ") {
-    console.log("Please enter a letter");
-  } else {
-    console.log(codedMsg);
+  // if (newLetter === "" || newLetter === " ") {
+  //   console.log("Please enter a letter");
+  //   workingCopy.splice(i, 1, oldLetter);
+  //   letter.setAttribute("newletter", oldLetter);
+  //   newResult = workingCopy.join('');
+  //   results.innerText = newResult;
+  // } else {
+    // console.log(codedMsg);
     
     for (let i = 0; i < codedMsg.length; i++) {
-      if (codedMsg[i] === oldLetter && newLetter !== null) {
+      if (codedMsg[i] === oldLetter && newLetter !== null && newLetter !== "" && newLetter !== " ") {
+        console.log(newLetter);
+        
         
         // let newCopy = workingCopy.replace(oldLetter, newLetter);
         workingCopy.splice(i, 1, newLetter);
-        
-  
-        // letter.attributes("newletter") = newLetter;
         letter.setAttribute("newletter", newLetter);
-        // letter.newletter = newLetter;
-        
-        
-        
+      } else if (codedMsg[i] === oldLetter && newLetter === null || codedMsg[i] === oldLetter && newLetter === "" || codedMsg[i] === oldLetter && newLetter === " ") {
+        workingCopy.splice(i, 1, oldLetter);
+        letter.setAttribute("newletter", oldLetter);
       }
     }
     newResult = workingCopy.join('');
     results.innerText = newResult;
-  }
+  // }
   
 }
 
@@ -62,12 +64,6 @@ function buttonClick() {
   // let workingCopy = [];
   console.log(codedMsg);
   console.log(workingCopy);
-
-
-  
-
-
-
 
 ///////// BELOW is for breaking words into arrays
 // for (let i = 0; i < codedMsg.length; i++) {
@@ -97,7 +93,28 @@ function buttonClick() {
   
 // }
 // console.log(fullText);
-
-
 };
+
+////// function to highlight letters on focus
+
+// 1. click in the box
+let highlight = (oldLetter, newLetter) => {
+  console.log("test");
+
+  for (let i = 0; i < codedMsg.length; i++) {
+    if (codedMsg[i] === oldLetter) {
+      // codedMsg[i].style = "color = blue";
+      // codedMsg[i].insertAdjacentElement("beforebegin","span")
+    }
+
+
+  }
+
+}
+
+// 2. find the letter
+
+// 3. change bg of letter
+
+// 4 on blur, remove bckground
 

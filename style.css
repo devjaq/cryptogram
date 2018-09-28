@@ -6,6 +6,11 @@ body {
 textarea {
   font-size: 1rem;
 }
+
+span {
+  color: red;
+}
+
 input {
   width: 1.25rem;
   height: 1.25rem;
