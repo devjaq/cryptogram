@@ -1,17 +1,48 @@
 "use strict";
 
+let editScreen = document.getElementById("edit-screen");
 let textBox = document.getElementsByTagName("textarea");
 
 let codedMsg = textBox[0].value;
 let workingCopy = codedMsg.split("");
-console.log(workingCopy);
 
 
 
 let results = document.createElement("p");
-let newResult = workingCopy.join('');
-results.innerText = newResult;
+let newResult = workingCopy;
+
+////// create a results display with special style for each character
+
+for (let i = 0; i < workingCopy.length; i++) {
+  if (workingCopy[i] === "," || workingCopy[i] === " " || workingCopy[i] === "." || workingCopy[i] === "!" || workingCopy[i] === "?") {
+
+  } else {
+    newResult[i] = `<span class="unknown ${workingCopy[i]}">${workingCopy[i]}</span>`
+  }
+}
+
+newResult = newResult.join('');
+results.innerHTML = newResult;
 document.body.appendChild(results);
+
+////// function to update results display
+
+let updateResults = () => {
+  newResult = workingCopy;
+  newResult = newResult.join('');
+  results.innerHTML = newResult;
+}
+
+let editMsg = () => {
+  editScreen.style.display = "flex";
+
+}
+
+let editButton = document.createElement("button");
+editButton.type = "button";
+editButton.setAttribute("onclick", "editMsg()");
+editButton.innerText = "Edit";
+document.body.appendChild(editButton);
 
 let letterBox = document.createElement("section");
 document.body.appendChild(letterBox);
@@ -23,25 +54,12 @@ for (let i = 0; i < 26; i++) {
 
 }
 
-////// after you have removed focus on one of the letter inputs, this function happens
+////// after you have removed focus on one of the letter input fields, this function happens
 let letterChange = (oldLetter, newLetter) => {
   let letter = document.getElementById(oldLetter);
-
-  // if (newLetter === "" || newLetter === " ") {
-  //   console.log("Please enter a letter");
-  //   workingCopy.splice(i, 1, oldLetter);
-  //   letter.setAttribute("newletter", oldLetter);
-  //   newResult = workingCopy.join('');
-  //   results.innerText = newResult;
-  // } else {
-    // console.log(codedMsg);
     
     for (let i = 0; i < codedMsg.length; i++) {
       if (codedMsg[i] === oldLetter && newLetter !== null && newLetter !== "" && newLetter !== " ") {
-        console.log(newLetter);
-        
-        
-        // let newCopy = workingCopy.replace(oldLetter, newLetter);
         workingCopy.splice(i, 1, newLetter);
         letter.setAttribute("newletter", newLetter);
       } else if (codedMsg[i] === oldLetter && newLetter === null || codedMsg[i] === oldLetter && newLetter === "" || codedMsg[i] === oldLetter && newLetter === " ") {
@@ -49,21 +67,22 @@ let letterChange = (oldLetter, newLetter) => {
         letter.setAttribute("newletter", oldLetter);
       }
     }
-    newResult = workingCopy.join('');
-    results.innerText = newResult;
-  // }
-  
+    updateResults();
 }
 
+
+
 function buttonClick() {
+  editScreen.style.display = "none";
+  codedMsg = textBox[0].value;
+  workingCopy = codedMsg.split("");
+  updateResults();
   let counter = 1;
   // console.log(textBox);
   // console.log(textBox[0].value);
   // let word = [];
   // let fullText = [];
   // let workingCopy = [];
-  console.log(codedMsg);
-  console.log(workingCopy);
 
 ///////// BELOW is for breaking words into arrays
 // for (let i = 0; i < codedMsg.length; i++) {
@@ -99,10 +118,12 @@ function buttonClick() {
 
 // 1. click in the box
 let highlight = (oldLetter, newLetter) => {
-  console.log("test");
+  // console.log("test");
 
   for (let i = 0; i < codedMsg.length; i++) {
     if (codedMsg[i] === oldLetter) {
+      console.log("match");
+      
       // codedMsg[i].style = "color = blue";
       // codedMsg[i].insertAdjacentElement("beforebegin","span")
     }
