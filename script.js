@@ -44,7 +44,10 @@ let updateMsg = () => {
   }
 };
 updateMsg();
-document.body.appendChild(results);
+let resultBox = document.createElement("div");
+resultBox.id = "result-box";
+document.body.appendChild(resultBox);
+resultBox.appendChild(results);
 
 ////// function to update results display
 
@@ -62,10 +65,11 @@ let editButton = document.createElement("button");
 editButton.type = "button";
 editButton.setAttribute("onclick", "editMsg()");
 editButton.innerText = "Edit";
-document.body.appendChild(editButton);
+resultBox.appendChild(editButton);
 
 ////// create area to input new letters
 let letterBox = document.createElement("section");
+letterBox.id = "letter-box";
 document.body.appendChild(letterBox);
 let alpha = [
   "a",
@@ -99,7 +103,7 @@ for (let i = 0; i < 26; i++) {
   let letterInput = document.createElement("div");
   letterInput.innerHTML = `${
     alpha[i]
-  } -> <input autocomplete="off" maxlength="1" type="text" id="${
+  } = <input autocomplete="off" maxlength="1" type="text" id="${
     alpha[i]
   }" newletter="${
     alpha[i]
