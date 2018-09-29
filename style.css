@@ -79,11 +79,14 @@ section div {
 
 
 span {
-  color: red;
   padding: 0 2px;
 }
 
 .unknown {
   background-color: dimgray;
   color: whitesmoke;
+}
+
+.active { 
+  color: red;
 }
